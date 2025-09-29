@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <!-- Previna zoom automático e ajuste para telas modernas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <title>Análise Facial Inteligente</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#FF5733">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+  <!-- Status da API -->
+  <div id="apiStatus" class="api-status" role="status">
+    Detectando API...
+  </div>
+
+  <!-- Tela de Consentimento -->
+  <section class="consent-screen" id="consentScreen" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <div class="consent-text">
+      <h2 id="consent-title">🔬 Análise Facial Inteligente</h2>
+      <p>Este aplicativo capturará uma foto do seu rosto e realizará uma análise completa da pele usando inteligência artificial.</p>
+      <p><strong>A análise inclui:</strong></p>
+      <ul>
+        <li>Classificação Fitzpatrick</li>
+        <li>Análise de textura da pele</li>
+        <li>Detecção de manchas</li>
+        <li>Análise de linhas de expressão</li>
+      </ul>
+      <p>A imagem será processada de forma segura e você poderá salvar os resultados.</p>
+      <p><small>Ao continuar, você concorda com o uso da sua câmera para fins de análise.</small></p>
+    </div>
+    <button class="btn" id="acceptConsent">🚀 Iniciar Análise</button>
+  </section>
+  
+  <!-- Interface Principal -->
+  <main class="container hidden" id="mainApp" aria-hidden="true">
+    <div class="video-container">
+      <!-- Câmera -->
+      <video id="video" autoplay playsinline muted aria-label="Visualização da Câmera"></video>
+      
+      <!-- Overlay guia -->
+      <div class="overlay">
+        <div class="ellipse-guide" role="img" aria-label="Guia de posicionamento facial em formato oval"></div>
+      </div>
+      
+      <!-- Instruções -->
+      <div class="instructions" role="status">
+        <h3>📸 Posicione seu rosto</h3>
+        <p>Centralize seu rosto no oval laranja</p>
+        <p>Mantenha expressão neutra e boa iluminação</p>
+      </div>
+      
+      <!-- Controles -->
+      <nav class="controls" aria-label="Controles da câmera">
+        <button class="btn switch-camera" id="switchCamera" aria-label="Trocar entre câmera frontal e traseira">🔄</button>
+        <button class="btn capture-btn" id="captureBtn" aria-label="Capturar e Analisar Foto">📷 Analisar</button>
+      </nav>
+    </div>
+  </main>
+  
+  <!-- Carregamento -->
+  <div class="loading hidden" id="loading" role="alert" aria-live="assertive">
+    <div class="loading-spinner"></div>
+    <span>Processando...</span>
+  </div>
+  
+  <!-- Canvas oculto -->
+  <canvas id="canvas"></canvas>
+
+  <!-- Preview -->
+  <section id="previewContainer" class="hidden" role="dialog" aria-modal="true" aria-labelledby="preview-title">
+    <h3 id="preview-title">📋 Prévia da Captura</h3>
+    <img id="previewImage" alt="Foto capturada para análise">
+    <div class="preview-actions">
+      <button class="btn" id="downloadBtn" aria-label="Baixar imagem">💾 Baixar</button>
+      <button class="btn" id="retryBtn" aria-label="Tentar nova captura">🔄 Tentar Novamente</button>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>

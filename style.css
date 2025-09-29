@@ -1,0 +1,371 @@
+/* Estilos Base e Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: #fff;
+  overflow-y: auto; /* Permite rolagem vertical */
+  -webkit-overflow-scrolling: touch; /* Suaviza rolagem no iOS */
+}
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Utilidade */
+.hidden {
+  display: none !important;
+}
+
+/* --- Botões Gerais --- */
+.btn {
+  background: linear-gradient(45deg, #FF5733, #ff784f);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 87, 51, 0.3);
+  pointer-events: auto;
+}
+
+.btn:hover:not(:disabled) {
+  background: linear-gradient(45deg, #e64e2e, #ff6a3c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 87, 51, 0.4);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* --- Tela de Consentimento --- */
+.consent-screen {
+  position: relative; /* não fixed para permitir scroll */
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Alinha ao topo para melhor scroll */
+  overflow-y: auto; /* ativa scroll se conteúdo ultrapassar altura */
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.consent-text {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 30px;
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.consent-text h2 {
+  color: #FF5733;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.consent-text ul {
+  list-style: none;
+  text-align: left;
+  margin: 15px 0 15px 20px;
+  padding-left: 10px;
+}
+
+.consent-text ul li::before {
+  content: "•";
+  color: #4caf50;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+/* --- Interface da Câmera --- */
+.video-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ellipse-guide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(220px, 55vw, 307px);
+  height: clamp(300px, 70vh, 407px);
+  border: 3px solid #FF5733;
+  border-radius: 50% / 60%;
+  background: rgba(255, 87, 51, 0.1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    border-color: #FF5733;
+    box-shadow: 0 0 0 0 rgba(255, 87, 51, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 87, 51, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 87, 51, 0);
+  }
+}
+
+.instructions {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px 25px;
+  border-radius: 20px;
+  z-index: 20;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.instructions h3 {
+  color: #FF5733;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.instructions p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.controls {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.switch-camera {
+  background: linear-gradient(45deg, #666, #888);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  padding: 0;
+}
+
+.switch-camera:hover:not(:disabled) {
+  background: linear-gradient(45deg, #555, #777);
+}
+
+.capture-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #FF5733, #e64e2e);
+  font-size: 18px;
+  font-weight: bold;
+  animation: readyPulse 1.5s infinite;
+}
+
+@keyframes readyPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.capture-btn:hover:not(:disabled) {
+  background: linear-gradient(45deg, #e64e2e, #cc4628);
+  animation: none;
+}
+
+/* --- Carregamento --- */
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  z-index: 100;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #FF5733;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#canvas { display: none; }
+
+/* --- Preview Simples (Fallback) --- */
+#previewContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+#previewImage {
+  max-width: 90%;
+  max-height: 50vh;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.preview-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* --- Status da API --- */
+#apiStatus {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+  .consent-text {
+    max-width: 320px;
+    padding: 20px;
+  }
+
+  .instructions {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    transform: none;
+    padding: 12px 16px;
+    width: auto;
+  }
+
+  .controls {
+    bottom: 30px;
+    gap: 15px;
+  }
+
+  .switch-camera {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .capture-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 16px;
+  }
+
+  .ellipse-guide {
+    width: 280px;
+    height: 370px;
+  }
+}
+
+@media (max-height: 600px) {
+  .instructions {
+    top: 10px;
+    padding: 8px 12px;
+  }
+
+  .controls {
+    bottom: 20px;
+  }
+
+  .ellipse-guide {
+    width: 250px;
+    height: 320px;
+  }
+}
+
+.container,
+.video-container {
+  width: 100vw;
+  height: 100vh;   /* fallback */
+  height: 100dvh;  /* iOS Safari corrige barra de navegação */
+}
+
+html, body {
+  height: -webkit-fill-available;
+}
